@@ -1,20 +1,20 @@
 const cheerio = require('cheerio');
 const request = require('request');
-const website = 'https://tvn24.pl';
-const fragment = '.decorate-heading';
-const phrase = 'nauka';
+const WEBSITE = 'https://tvn24.pl';
+const FRAGMENT = '.decorate-heading';
+const PHRASE = 'nauka';
 
 request(website, (error, response, html) => {
     if (!error && response.statusCode === 200) {
         const $ = cheerio.load(html);
         let newsArray = [];
-        $(fragment).each((index, element) => {
+        $(FRAGMENT).each((index, element) => {
             const item = $(element).text();
             newsArray.push($(element).text());
         });
         let check = 0;
         newsArray.forEach(element => {
-            if (element.toLowerCase().includes(phrase)) {
+            if (element.toLowerCase().includes(PHRASE)) {
                 console.warn('Dzisiejszy news to:');
                 console.log(element);
                 check++;
@@ -22,7 +22,7 @@ request(website, (error, response, html) => {
         });
 
         if (check === 0) {
-            console.warn(`Na stronie ${website} nie znaleziono nic z frazą: ${phrase}`)
+            console.warn(`Na stronie ${WEBSITE} nie znaleziono nic z frazą: ${PHRASE}`)
         }
     }
 });
